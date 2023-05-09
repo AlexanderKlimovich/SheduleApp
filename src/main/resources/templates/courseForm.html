@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:if="${course.id}">Edit Course</title>
+    <title th:unless="${course.id}">New Course</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h1 th:if="${course.id}">Edit Course</h1>
+<h1 th:unless="${course.id}">New Course</h1>
+<form th:action="@{/courses/__${course.id}__}" method="post">
+    <input type="hidden" th:if="${course.id}" name="_method" value="PUT"/>
+    <p>Name: <input type="text" th:field="*{course.name}" /></p>
+    <button type="submit">Save</button>
+</form>
+<a th:href="@{/courses}">Back to All Courses</a>
+</body>
+</html>

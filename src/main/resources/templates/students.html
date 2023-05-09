@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:webjars="http://www.webjars.org/thymeleaf/webjars">
+<head>
+    <meta charset="UTF-8">
+    <title>All Students</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h1>All Students</h1>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="student : ${students}">
+        <td th:text="${student.fullName}"></td>
+        <td th:text="${student.email}"></td>
+        <td th:text="${student.group.name}"></td>
+        <td>
+            <a th:href="@{/students/{id}/edit(id=${student.id})}" class="btn btn-warning">Edit</a>
+            <a th:href="@{/students/{id}/students-delete(id=${student.id})}" onclick="return confirm('Are you sure you want to delete this student?')" class="btn btn-danger">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/students/new}" class="btn btn-primary">Add New Student</a>
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+</body>
+</html>

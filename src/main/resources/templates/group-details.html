@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${group.name}">Group Details</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet"/>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container mt-5">
+    <h1 th:text="${group.name}">Group Details</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${group.name}"></td>
+            <td th:text="${group.status}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <h2>Students in this group</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="student : ${group.students}">
+            <td th:text="${student.fullName}"></td>
+            <td th:text="${student.email}"></td>
+            <td>
+                <form th:action="@{/groups/{groupId}/students/remove(studentId=${student.id})}" method="post">
+                    <input type="hidden" name="_method" value="put" />
+                    <button type="submit" class="btn btn-danger">Remove</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/groups/{id}/edit(id=${group.id})}" class="btn btn-warning">Edit</a>
+    <a th:href="@{/groups/{id}/delete(id=${group.id})}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
+</div>
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+</body>
+</html>

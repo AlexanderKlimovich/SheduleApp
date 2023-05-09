@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Professor Form</title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h1>Professor Form</h1>
+<form action="#" th:action="@{/professors/save}" th:object="${professor}" method="post">
+    php
+    Copy code
+    <div>
+        <label for="fullName">Full Name:</label>
+        <input type="text" id="fullName" th:field="*{fullName}" />
+        <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}">Full Name Error</span>
+    </div>
+
+    <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" />
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email Error</span>
+    </div>
+
+    <div>
+        <label for="courses">Courses:</label>
+        <select multiple id="courses" th:field="*{courses}">
+            <option th:each="course : ${allCourses}" th:value="${course}" th:text="${course.name}"></option>
+        </select>
+        <span th:if="${#fields.hasErrors('courses')}" th:errors="*{courses}">Courses Error</span>
+    </div>
+
+    <div>
+        <input type="submit" value="Save" />
+    </div>
+</form>
+</body>
+</html>

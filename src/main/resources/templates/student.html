@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${student.fullName}"></title>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<h1 th:text="${student.fullName}"></h1>
+<p th:text="${student.email}"></p>
+<a th:href="@{/students}">Back to All Students</a>
+<a th:href="@{/students/__${student.id}__/edit}">Edit</a>
+<a th:href="@{/students/__${student.id}__/delete}">Delete</a>
+</body>
+</html>

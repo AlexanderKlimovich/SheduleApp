@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:if="${group.id}">Edit Group</title>
+    <title th:unless="${group.id}">New Group</title>
+    <link th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}" rel="stylesheet" />
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+<div class="container mt-5">
+    <h1 th:if="${group.id}">Edit Group</h1>
+    <h1 th:unless="${group.id}">New Group</h1>
+    <form th:action="@{/groups}" method="post" th:object="${group}">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" th:field="*{name}" />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <select id="status" name="status" class="form-select" th:field="*{status}">
+                <option value="ACTIVE" th:selected="${group.status == 'ACTIVE'}">ACTIVE</option>
+                <option value="INACTIVE" th:selected="${group.status == 'INACTIVE'}">INACTIVE</option>
+            </select>
+            <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label for="students">Students:</label>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="student : ${group.students}">
+                    <td th:text="${student.fullName}"></td>
+                    <td>
+                        <a th:href="@{/students/{id}/remove-from-group(id=${student.id},groupId=${group.id})}" class="btn btn-danger">Remove</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <select id="students" name="students" class="form-select">
+                <option value="">Select student to add</option>
+                <option th:each="student : ${allStudents}" th:value="${student.id}" th:text="${student.name}"></option>
+            </select>
+            <button type="submit" name="addStudent" value="addStudent" class="btn btn-primary mt-2">Add Student</button>
+        </div>
+        <input type="hidden" id="id" name="id" th:field="*{id}" />
+        <input type="submit" value="Save" class="btn btn-success mt-3" />
+    </form>
+</div>
+<script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.min.js}"></script>
+</body>
+</html>
